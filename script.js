@@ -30,3 +30,12 @@ function operate(operator,a,b) {
             return divide(a,b);
     }
 }
+
+const screen = document.querySelector('.screen');
+const prevScreen = document.createElement('div');
+prevScreen.className = 'previousScreen';
+const currentScreen = document.createElement('div');
+currentScreen.className = 'currentScreen';
+
+screen.appendChild(prevScreen);
+screen.appendChild(currentScreen);
