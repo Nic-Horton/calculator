@@ -1,1 +1,1 @@
-# calculator
+# This project creates a usable calculator
