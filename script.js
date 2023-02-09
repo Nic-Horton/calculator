@@ -1,4 +1,10 @@
 function add(a,b) {
-    const sum = a + b;
-    return sum
+    const result = a + b;
+    return result;
 }
+
+function subtract(a,b) {
+    const result = a - b;
+    return result;
+}
+
