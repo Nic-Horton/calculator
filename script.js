@@ -5,30 +5,31 @@ let currentNumber = '';
 let newOperator = '';
 let decCount = 0;
 let opCount = 0;
+let eqCount = 0;
 
 function add(a,b) {
     const result = a + b;
-    return result.toFixed(2);
+    return Math.round((result + Number.EPSILON) * 100) / 100;
 }
 
 function subtract(a,b) {
     const result = a - b;
-    return result.toFixed(2);
+    return Math.round((result + Number.EPSILON) * 100) / 100;
 }
 
 function multiply(a,b) {
     const result = a * b;
-    return result.toFixed(2);
+    return Math.round((result + Number.EPSILON) * 100) / 100;
 }
 
 function divide(a,b) {
     const result = a / b;
-    return result.toFixed(2);
+    return Math.round((result + Number.EPSILON) * 100) / 100;
 }
 
 function operate(operator,a,b) {
     if (newOperator === prevNumber){
-        return clear();
+        return;
     }
     a = parseFloat(a);
     b = parseFloat(b);
@@ -78,6 +79,7 @@ opButtons.forEach((button) => {
         }
         opCount++;
         decCount = 0;
+        eqCount = 0;
         if (opCount > 1) {
             currentNumber = operate(operatorValue,prevNumber,currentNumber);
             currentScreen.textContent = currentNumber;
@@ -96,6 +98,10 @@ const equalButton = document.querySelector('.equal');
 equalButton.addEventListener('click', () => {
     decCount = 0;
     opCount = 0;
+    eqCount++;
+    if (eqCount > 1){
+        return;
+    }
     if (prevNumber == '' || currentNumber == ''){
         return;
     } else {
@@ -116,6 +122,7 @@ function clear() {
     previousScreen.textContent = '';
     decCount = 0;
     opCount = 0;
+    eqCount = 0;
 }
 
 const clearButton = document.querySelector('.clear');
