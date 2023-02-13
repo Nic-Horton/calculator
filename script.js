@@ -75,12 +75,13 @@ const opButtons = document.querySelectorAll('.opBtn');
 opButtons.forEach((button) => {
     button.addEventListener('click', () => {
         if (currentNumber == ''){
-            return;
+            return clear();
         }
         opCount++;
         decCount = 0;
         eqCount = 0;
         if (opCount > 1) {
+            previousScreen.textContent = (prevNumber + ' ' + operatorValue + ' ' + currentNumber + ' =');
             currentNumber = operate(operatorValue,prevNumber,currentNumber);
             currentScreen.textContent = currentNumber;
             displayValue = '';
