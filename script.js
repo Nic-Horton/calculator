@@ -23,6 +23,10 @@ function multiply(a,b) {
 }
 
 function divide(a,b) {
+    if (b === 0) {
+        alert("Nice Try");
+        return clear();
+    }
     const result = a / b;
     return Math.round((result + Number.EPSILON) * 100) / 100;
 }
@@ -81,7 +85,6 @@ opButtons.forEach((button) => {
         decCount = 0;
         eqCount = 0;
         if (opCount > 1) {
-            previousScreen.textContent = (prevNumber + ' ' + operatorValue + ' ' + currentNumber + ' =');
             currentNumber = operate(operatorValue,prevNumber,currentNumber);
             currentScreen.textContent = currentNumber;
             displayValue = '';
