@@ -133,3 +133,14 @@ const clearButton = document.querySelector('.clear');
 clearButton.addEventListener('click', () => {
     clear();
 });
+
+function backSpace() {
+    displayValue = displayValue.slice(0,-1) + '';
+    currentNumber = displayValue;
+    currentScreen.textContent = displayValue;
+}
+
+const backButton = document.querySelector('.delete');
+backButton.addEventListener('click', () => {
+    backSpace();
+});
