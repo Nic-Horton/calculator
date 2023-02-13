@@ -4,6 +4,7 @@ let prevNumber = '';
 let currentNumber = '';
 let newOperator = '';
 let decCount = 0;
+let opCount = 0;
 
 function add(a,b) {
     const result = a + b;
@@ -74,20 +75,27 @@ opButtons.forEach((button) => {
     button.addEventListener('click', () => {
         if (currentNumber == ''){
             return;
-        } else {
+        }
+        opCount++;
         decCount = 0;
+        if (opCount > 1) {
+            currentNumber = operate(operatorValue,prevNumber,currentNumber);
+            currentScreen.textContent = currentNumber;
+            displayValue = '';
+            newOperator = prevNumber;
+        }
         operatorValue = button.textContent;
         prevNumber = currentNumber;
         currentNumber = '';
         displayValue = '';
         previousScreen.textContent = (prevNumber + ' ' + operatorValue);
-        }
     });
 });
 
 const equalButton = document.querySelector('.equal');
 equalButton.addEventListener('click', () => {
     decCount = 0;
+    opCount = 0;
     if (prevNumber == '' || currentNumber == ''){
         return;
     } else {
@@ -107,6 +115,7 @@ function clear() {
     currentScreen.textContent = '';
     previousScreen.textContent = '';
     decCount = 0;
+    opCount = 0;
 }
 
 const clearButton = document.querySelector('.clear');
