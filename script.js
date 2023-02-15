@@ -7,6 +7,8 @@ let lastOperator = '';
 let decCount = 0;
 let opCount = 0;
 
+window.addEventListener('keydown', keyInput);
+
 function add(a,b) {
     const result = a + b;
     return Math.round((result + Number.EPSILON) * 100) / 100;
@@ -141,3 +143,55 @@ const backButton = document.querySelector('.delete');
 backButton.addEventListener('click', () => {
     backSpace();
 });
+
+function keyInput(e) {
+    if (e.key === '.') {
+        decCount++;
+        if (decCount > 1){
+        return;
+        }
+    }
+    if (e.key >= 0 && e.key <= 9 || e.key === '.') {
+        displayValue += e.key;
+        currentNumber = displayValue;
+        currentScreen.textContent = displayValue;
+    }
+    if (e.key === '=' || e.key === 'Enter'){
+        decCount = 0;
+        opCount = 0;
+        if (prevNumber === '' || currentNumber === ''){
+            return;
+        } else {
+            previousScreen.textContent = (prevNumber + ' ' + operatorValue + ' ' + currentNumber + ' =');
+            currentNumber = operate(operatorValue,prevNumber,currentNumber);
+            currentScreen.textContent = currentNumber;
+            displayValue = currentNumber;
+            newOperatorNum = prevNumber;
+            lastOperator = operatorValue;
+        }
+    }
+    if (e.key === 'Backspace') backSpace();
+    if (e.key === 'Escape') clear();
+    if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/'){
+        opCount++;
+        decCount = 0;
+        if (opCount > 1) {
+            currentNumber = operate(operatorValue,prevNumber,currentNumber);
+            currentScreen.textContent = '';
+            displayValue = currentNumber;
+            newOperatorNum = prevNumber;
+        }
+        operatorValue = (getOperator(e.key));
+        prevNumber = currentNumber;
+        currentNumber = '';
+        displayValue = '';
+        previousScreen.textContent = (prevNumber + ' ' + operatorValue);
+    }
+}
+  
+function getOperator(keyOperator) {
+    if (keyOperator === '/') return '÷';
+    if (keyOperator === '*') return 'x';
+    if (keyOperator === '-') return '-';
+    if (keyOperator === '+') return '+';
+  }
