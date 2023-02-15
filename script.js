@@ -2,10 +2,10 @@ let displayValue = '';
 let operatorValue = '';
 let prevNumber = '';
 let currentNumber = '';
-let newOperator = '';
+let newOperatorNum = '';
+let lastOperator = '';
 let decCount = 0;
 let opCount = 0;
-let eqCount = 0;
 
 function add(a,b) {
     const result = a + b;
@@ -32,8 +32,10 @@ function divide(a,b) {
 }
 
 function operate(operator,a,b) {
-    if (newOperator === prevNumber){
-        return;
+    if (a != 0 || b != 0) {
+        if (newOperatorNum === prevNumber &&  lastOperator === operatorValue){
+            return clear();
+        }
     }
     a = parseFloat(a);
     b = parseFloat(b);
@@ -78,17 +80,16 @@ numberButtons.forEach((button) => {
 const opButtons = document.querySelectorAll('.opBtn');
 opButtons.forEach((button) => {
     button.addEventListener('click', () => {
-        if (currentNumber == ''){
-            return clear();
+        if (currentNumber === ''){
+            return;
         }
         opCount++;
         decCount = 0;
-        eqCount = 0;
         if (opCount > 1) {
             currentNumber = operate(operatorValue,prevNumber,currentNumber);
-            currentScreen.textContent = currentNumber;
-            displayValue = '';
-            newOperator = prevNumber;
+            currentScreen.textContent = '';
+            displayValue = currentNumber;
+            newOperatorNum = prevNumber;
         }
         operatorValue = button.textContent;
         prevNumber = currentNumber;
@@ -102,18 +103,15 @@ const equalButton = document.querySelector('.equal');
 equalButton.addEventListener('click', () => {
     decCount = 0;
     opCount = 0;
-    eqCount++;
-    if (eqCount > 1){
-        return;
-    }
-    if (prevNumber == '' || currentNumber == ''){
+    if (prevNumber === '' || currentNumber === ''){
         return;
     } else {
     previousScreen.textContent = (prevNumber + ' ' + operatorValue + ' ' + currentNumber + ' =');
     currentNumber = operate(operatorValue,prevNumber,currentNumber);
     currentScreen.textContent = currentNumber;
-    displayValue = '';
-    newOperator = prevNumber;
+    displayValue = currentNumber;
+    newOperatorNum = prevNumber;
+    lastOperator = operatorValue;
     }
 });
 
@@ -126,7 +124,6 @@ function clear() {
     previousScreen.textContent = '';
     decCount = 0;
     opCount = 0;
-    eqCount = 0;
 }
 
 const clearButton = document.querySelector('.clear');
